@@ -42,3 +42,19 @@ def get_user(conn: mysql.connector.MySQLConnection, user_id: int) -> User:
     cursor.close()
     return user
 
+def create_user(conn: mysql.connector.MySQLConnection, user: User) -> User:
+    cursor = conn.cursor()
+    query = "INSERT INTO users (username, email, password, full_name, is_active, is_superuser, role) VALUES (%s, %s, %s, %s, %s, %s, %s)"
+    cursor.execute(query, (user.username, user.email, user.password, user.full_name, user.is_active, user.is_superuser, user.role))
+    conn.commit()
+    cursor.close()
+    return user
+
+
+def update_user(conn: mysql.connector.MySQLConnection, user_id: int, user: User) -> User:
+    cursor = conn.cursor()
+    query = "UPDATE users SET username = %s, email = %s, password = %s, full_name = %s, is_active = %s, is_superuser = %s, role = %s WHERE id = %s"
+    cursor.execute(query, (user.username, user.email, user.password, user.full_name, user.is_active, user.is_superuser, user.role, user_id))
+    conn.commit()
+    cursor.close()
+    return user

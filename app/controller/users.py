@@ -14,7 +14,7 @@ def read_users():
     except Exception as err:
         raise HTTPException(status_code=500, detail=f"Error getting users: {err}")
     
-@router.get("/users/{user_id}", response_model=User)
+@router.get("/user/{user_id}", response_model=User)
 def read_user(user_id: int):
     try:
         service = Service_user()
@@ -22,3 +22,21 @@ def read_user(user_id: int):
         return user
     except Exception as err:
         raise HTTPException(status_code=500, detail=f"Error getting user: {err}")
+    
+@router.post("/user", response_model=User)
+def create_user(user: User):
+    try:
+        service = Service_user()
+        user = service.create_user(user)
+        return {"message": "User created successfully"}
+    except Exception as err:
+        raise HTTPException(status_code=500, detail=f"Error creating user: {err}")
+    
+@router.put("/user/{user_id}", response_model=User)
+def update_user(user_id: int, user: User):
+    try:
+        service = Service_user()
+        user = service.update_user(user_id, user)
+        return {"message": "User updated successfully"}
+    except Exception as err:
+        raise HTTPException(status_code=500, detail=f"Error updating user: {err}")
