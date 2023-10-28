@@ -12,3 +12,11 @@ class Service_user:
             return users
         except Exception as err:
             raise HTTPException(status_code=500, detail=f"Error getting users: {err}, service users")
+        
+    def get_user_from_db(self, user_id):
+        try:
+            user = get_user(self.dao.connect_to_db(), user_id)
+            return user
+        except Exception as err:
+            raise HTTPException(status_code=500, detail=f"Error getting user: {err}, service users")
+        

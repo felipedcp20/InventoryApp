@@ -14,3 +14,11 @@ def read_users():
     except Exception as err:
         raise HTTPException(status_code=500, detail=f"Error getting users: {err}")
     
+@router.get("/users/{user_id}", response_model=User)
+def read_user(user_id: int):
+    try:
+        service = Service_user()
+        user = service.get_user_from_db(user_id)
+        return user
+    except Exception as err:
+        raise HTTPException(status_code=500, detail=f"Error getting user: {err}")

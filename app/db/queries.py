@@ -23,3 +23,22 @@ def get_users(conn: mysql.connector.MySQLConnection) -> List[User]:
         
     cursor.close()
     return users
+
+def get_user(conn: mysql.connector.MySQLConnection, user_id: int) -> User:
+    cursor = conn.cursor()
+    query = "SELECT * FROM users WHERE id = %s"
+    cursor.execute(query, (user_id,))
+    result = cursor.fetchall()
+    user = User(
+        id=result[0][0],
+        username=result[0][1],
+        email=result[0][2],
+        password=result[0][3],
+        full_name=result[0][4],
+        is_active=bool(result[0][5]),
+        is_superuser=bool(result[0][6]),
+        role=result[0][7]
+    )
+    cursor.close()
+    return user
+
