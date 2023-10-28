@@ -1,6 +1,7 @@
 from typing import List
 import mysql.connector
 from app.models.user import User
+from app.models.item import Item
 
 
 def get_users(conn: mysql.connector.MySQLConnection) -> List[User]:
@@ -86,3 +87,32 @@ def update_user(
     conn.commit()
     cursor.close()
     return user
+
+
+def delete_user(conn: mysql.connector.MySQLConnection, user_id: int) -> bool:
+    cursor = conn.cursor()
+    query = "DELETE FROM users WHERE id = %s"
+    cursor.execute(query, (user_id,))
+    conn.commit()
+    cursor.close()
+    return True
+
+
+def get_items(conn: mysql.connector.MySQLConnection) -> List[User]:
+    cursor = conn.cursor()
+    query = "SELECT * FROM items"
+    cursor.execute(query)
+    result = cursor.fetchall()
+    items = []
+    
+    for item in result:
+        item = Item(
+        id=item[0],
+        name=item[1],
+        description=item[2],
+        owner_id=item[3],
+        )
+        items.append(item)
+    
+    cursor.close()
+    return items

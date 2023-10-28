@@ -44,3 +44,14 @@ def update_user(user_id: int, user: User):
         return {"message": "User updated successfully"}
     except Exception as err:
         raise HTTPException(status_code=500, detail=f"Error updating user: {err}")
+
+
+@router.delete("/user/{user_id}")
+def delete_user(user_id: int):
+    try:
+        service = Service_user()
+        user = service.delete_user(user_id)
+        return user
+    except Exception as err:
+        raise HTTPException(status_code=500, detail=f"Error deleting user: {err}")
+    

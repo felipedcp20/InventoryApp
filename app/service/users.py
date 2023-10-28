@@ -1,5 +1,5 @@
 from app.db.connection import Dao
-from app.db.queries import get_users, get_user, create_user, update_user
+from app.db.queries import get_users, get_user, create_user, update_user, delete_user
 from fastapi import HTTPException
 
 
@@ -42,3 +42,15 @@ class Service_user:
             raise HTTPException(
                 status_code=500, detail=f"Error updating user: {err}, service users"
             )
+
+    def delete_user(self, user_id):
+        try:
+            value = delete_user(self.dao.connect_to_db(), user_id)
+            if value:
+                return {"message": "User deleted"}
+            else:
+                return {"message": "User not deleted"}
+        except Exception as err:
+            raise HTTPException(
+                status_code=500, detail=f"Error deleting user: {err}, service users"
+            )   
