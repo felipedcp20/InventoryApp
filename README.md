@@ -2,29 +2,38 @@
 
 ## Instalación
 
-1. Clona este repositorio:
+1. create a virtual env:
+```
+python3.10 -m venv venv
+```
 
- git clone https://github.com/felipedcp20/inventoryAPP.git
-   
+2. Activate the virtual env:
+```
+source venv/bin/activate
+```
 
-2. Crea un ambiente virtual:
-
-python3 -m venv env
-   
-
-
-3. Activa el ambiente virtual:
-- En Windows:
-env\Scripts\activate
-     
-En macOS y Linux:
-source env/bin/activate
-     
-
-
-4. Instala las dependencias del proyecto:
+3. Run requirements:
+```
 pip install -r requirements.txt
+```
+
+4. for run the app use the next command after install requeriments:
+
+```
+uvicorn main:app --reload
+```
    
+## USERS
+![](assets/users.png)
+
+## ITEMS
+![](assets/items.png)
+
+## DER
+![](assets/der.png)
+
+
+
 
 
 ## Endpoints
