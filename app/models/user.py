@@ -1,6 +1,7 @@
 from typing import Optional
 from pydantic import BaseModel
 
+
 class User(BaseModel):
     id: Optional[int]
     username: str
@@ -9,5 +10,4 @@ class User(BaseModel):
     full_name: str
     is_active: Optional[bool] = True
     is_superuser: Optional[bool] = False
-    role: Optional[str] = 'empleado'
-
+    role: Optional[str] = "empleado"

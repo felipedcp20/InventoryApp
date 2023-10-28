@@ -5,6 +5,7 @@ from app.service.users import Service_user
 
 router = APIRouter()
 
+
 @router.get("/users", response_model=List[User])
 def read_users():
     try:
@@ -13,7 +14,8 @@ def read_users():
         return users
     except Exception as err:
         raise HTTPException(status_code=500, detail=f"Error getting users: {err}")
-    
+
+
 @router.get("/user/{user_id}", response_model=User)
 def read_user(user_id: int):
     try:
@@ -22,7 +24,8 @@ def read_user(user_id: int):
         return user
     except Exception as err:
         raise HTTPException(status_code=500, detail=f"Error getting user: {err}")
-    
+
+
 @router.post("/user", response_model=User)
 def create_user(user: User):
     try:
@@ -31,7 +34,8 @@ def create_user(user: User):
         return {"message": "User created successfully"}
     except Exception as err:
         raise HTTPException(status_code=500, detail=f"Error creating user: {err}")
-    
+
+
 @router.put("/user/{user_id}", response_model=User)
 def update_user(user_id: int, user: User):
     try:

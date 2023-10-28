@@ -1,6 +1,7 @@
-from app.db.connection import Dao 
+from app.db.connection import Dao
 from app.db.queries import get_users, get_user, create_user, update_user
 from fastapi import HTTPException
+
 
 class Service_user:
     def __init__(self) -> None:
@@ -11,26 +12,33 @@ class Service_user:
             users = get_users(self.dao.connect_to_db())
             return users
         except Exception as err:
-            raise HTTPException(status_code=500, detail=f"Error getting users: {err}, service users")
-        
+            raise HTTPException(
+                status_code=500, detail=f"Error getting users: {err}, service users"
+            )
+
     def get_user_from_db(self, user_id):
         try:
             user = get_user(self.dao.connect_to_db(), user_id)
             return user
         except Exception as err:
-            raise HTTPException(status_code=500, detail=f"Error getting user: {err}, service users")
-    
+            raise HTTPException(
+                status_code=500, detail=f"Error getting user: {err}, service users"
+            )
+
     def create_user(self, user):
         try:
             user = create_user(self.dao.connect_to_db(), user)
             return user
         except Exception as err:
-            raise HTTPException(status_code=500, detail=f"Error creating user: {err}, service users")
-        
+            raise HTTPException(
+                status_code=500, detail=f"Error creating user: {err}, service users"
+            )
+
     def update_user(self, user_id, user):
         try:
             user = update_user(self.dao.connect_to_db(), user_id, user)
             return user
         except Exception as err:
-            raise HTTPException(status_code=500, detail=f"Error updating user: {err}, service users")
-        
+            raise HTTPException(
+                status_code=500, detail=f"Error updating user: {err}, service users"
+            )

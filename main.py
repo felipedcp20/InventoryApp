@@ -16,6 +16,7 @@ app.add_middleware(
 
 app.include_router(users.router)
 
+
 @app.get("/")
 def read_root():
     return {"inventory": "version1.0"}

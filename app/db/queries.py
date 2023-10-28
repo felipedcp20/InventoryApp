@@ -2,6 +2,7 @@ from typing import List
 import mysql.connector
 from app.models.user import User
 
+
 def get_users(conn: mysql.connector.MySQLConnection) -> List[User]:
     cursor = conn.cursor()
     query = "SELECT * FROM users"
@@ -17,12 +18,13 @@ def get_users(conn: mysql.connector.MySQLConnection) -> List[User]:
             full_name=record[4],
             is_active=bool(record[5]),
             is_superuser=bool(record[6]),
-            role=record[7]
+            role=record[7],
         )
         users.append(user)
-        
+
     cursor.close()
     return users
+
 
 def get_user(conn: mysql.connector.MySQLConnection, user_id: int) -> User:
     cursor = conn.cursor()
@@ -37,24 +39,50 @@ def get_user(conn: mysql.connector.MySQLConnection, user_id: int) -> User:
         full_name=result[0][4],
         is_active=bool(result[0][5]),
         is_superuser=bool(result[0][6]),
-        role=result[0][7]
+        role=result[0][7],
     )
     cursor.close()
     return user
 
+
 def create_user(conn: mysql.connector.MySQLConnection, user: User) -> User:
     cursor = conn.cursor()
     query = "INSERT INTO users (username, email, password, full_name, is_active, is_superuser, role) VALUES (%s, %s, %s, %s, %s, %s, %s)"
-    cursor.execute(query, (user.username, user.email, user.password, user.full_name, user.is_active, user.is_superuser, user.role))
+    cursor.execute(
+        query,
+        (
+            user.username,
+            user.email,
+            user.password,
+            user.full_name,
+            user.is_active,
+            user.is_superuser,
+            user.role,
+        ),
+    )
     conn.commit()
     cursor.close()
     return user
 
 
-def update_user(conn: mysql.connector.MySQLConnection, user_id: int, user: User) -> User:
+def update_user(
+    conn: mysql.connector.MySQLConnection, user_id: int, user: User
+) -> User:
     cursor = conn.cursor()
     query = "UPDATE users SET username = %s, email = %s, password = %s, full_name = %s, is_active = %s, is_superuser = %s, role = %s WHERE id = %s"
-    cursor.execute(query, (user.username, user.email, user.password, user.full_name, user.is_active, user.is_superuser, user.role, user_id))
+    cursor.execute(
+        query,
+        (
+            user.username,
+            user.email,
+            user.password,
+            user.full_name,
+            user.is_active,
+            user.is_superuser,
+            user.role,
+            user_id,
+        ),
+    )
     conn.commit()
     cursor.close()
     return user
