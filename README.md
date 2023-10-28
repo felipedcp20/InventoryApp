@@ -4,7 +4,7 @@
 
 1. Clona este repositorio:
 
- git clone https://github.com/felipedcp20/Appinventory.git
+ git clone https://github.com/felipedcp20/inventoryAPP.git
    
 
 2. Crea un ambiente virtual:
