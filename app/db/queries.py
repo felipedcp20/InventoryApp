@@ -116,3 +116,56 @@ def get_items(conn: mysql.connector.MySQLConnection) -> List[User]:
     
     cursor.close()
     return items
+
+def get_item(conn: mysql.connector.MySQLConnection, item_id: int) -> Item:
+    cursor = conn.cursor()
+    query = "SELECT * FROM items WHERE id = %s"
+    cursor.execute(query, (item_id,))
+    result = cursor.fetchall()
+    item = Item(
+        id=result[0][0],
+        name=result[0][1],
+        description=result[0][2],
+        owner_id=result[0][3],
+    )
+    cursor.close()
+    return item
+
+def create_item(conn: mysql.connector.MySQLConnection, item: Item) -> Item:
+    cursor = conn.cursor()
+    query = "INSERT INTO items (name, description, owner_id) VALUES (%s, %s, %s)"
+    cursor.execute(
+        query,
+        (
+            item.name,
+            item.description,
+            item.owner_id,
+        ),
+    )
+    conn.commit()
+    cursor.close()
+    return item
+
+def update_item(conn: mysql.connector.MySQLConnection, item_id: int, item: Item) -> Item:
+    cursor = conn.cursor()
+    query = "UPDATE items SET name = %s, description = %s, owner_id = %s WHERE id = %s"
+    cursor.execute(
+        query,
+        (
+            item.name,
+            item.description,
+            item.owner_id,
+            item_id,
+        ),
+    )
+    conn.commit()
+    cursor.close()
+    return item
+
+def deleted_item(conn: mysql.connector.MySQLConnection, item_id: int) -> bool:
+    cursor = conn.cursor()
+    query = "DELETE FROM items WHERE id = %s"
+    cursor.execute(query, (item_id,))
+    conn.commit()
+    cursor.close()
+    return True

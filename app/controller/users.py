@@ -6,7 +6,7 @@ from app.service.users import Service_user
 router = APIRouter()
 
 
-@router.get("/users", response_model=List[User])
+@router.get("/users", response_model=List[User], tags=["users"])
 def read_users():
     try:
         service = Service_user()
@@ -16,7 +16,7 @@ def read_users():
         raise HTTPException(status_code=500, detail=f"Error getting users: {err}")
 
 
-@router.get("/user/{user_id}", response_model=User)
+@router.get("/user/{user_id}", response_model=User, tags=["users"])
 def read_user(user_id: int):
     try:
         service = Service_user()
@@ -26,7 +26,7 @@ def read_user(user_id: int):
         raise HTTPException(status_code=500, detail=f"Error getting user: {err}")
 
 
-@router.post("/user", response_model=User)
+@router.post("/user", response_model=User, tags=["users"])
 def create_user(user: User):
     try:
         service = Service_user()
@@ -36,7 +36,7 @@ def create_user(user: User):
         raise HTTPException(status_code=500, detail=f"Error creating user: {err}")
 
 
-@router.put("/user/{user_id}", response_model=User)
+@router.put("/user/{user_id}", response_model=User, tags=["users"])
 def update_user(user_id: int, user: User):
     try:
         service = Service_user()
@@ -46,7 +46,7 @@ def update_user(user_id: int, user: User):
         raise HTTPException(status_code=500, detail=f"Error updating user: {err}")
 
 
-@router.delete("/user/{user_id}")
+@router.delete("/user/{user_id}", tags=["users"])
 def delete_user(user_id: int):
     try:
         service = Service_user()
